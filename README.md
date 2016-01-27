@@ -2,7 +2,7 @@
 audio style, 音频播放器样式
 ![](example/audio.jpg)
 
-demo示例:[http://www.lovewebgames.com/jsmodule/dialog.html](http://www.lovewebgames.com/jsmodule/dialog.html)
+demo示例:[http://www.lovewebgames.com/jsmodule/audio.html](http://www.lovewebgames.com/jsmodule/audio.html)
 
     <audio src="horse.ogg" class="audio" controls="controls">
     Your browser does not support the audio element.
