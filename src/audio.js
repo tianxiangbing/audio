@@ -46,7 +46,7 @@
 			} else {
 				_this.durationContent.html($(_this.settings.target).attr('duration')||"");
 			}
-			this.settings.target.on('loadedmetadata', function() {
+			this.settings.target.on('canplaythrough', function() {
 				_this.duration = _this.audio.duration;
 				if (_this.duration != "Infinity") {
 					_this.durationContent.html(Math.floor(_this.duration) + 's');
