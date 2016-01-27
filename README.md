@@ -15,7 +15,7 @@ demo示例:[http://www.lovewebgames.com/jsmodule/audio.html](http://www.lovewebg
     <script>
     $('.audio').Audio();//or new Audio.init({target:$('.audio')})
     </script>
-
+*注意：当duration取不到时，会尝试去audio的duration属性*
 #属性和回调(options)
 
 ##target:

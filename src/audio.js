@@ -30,8 +30,7 @@
 		return list;
 	};
 	class Audio {
-		contructor() {
-		}
+		contructor() {}
 		init(options) {
 			let rnd = Math.random().toString().replace('.', '');
 			this.id = 'audio_' + rnd;
@@ -41,9 +40,24 @@
 			this.settings = $.extend(this.settings, options);
 			this.audio = $(this.settings.target).get(0);
 			this.createDom();
-			this.settings.target.on('canplay', function() {
-				_this.duration = _this.audio.duration;
+			_this.duration = _this.audio.duration;
+			if (_this.duration != "Infinity") {
 				_this.durationContent.html(Math.floor(_this.duration) + 's');
+			} else {
+				_this.durationContent.html($(_this.settings.target).attr('duration')||"");
+			}
+			this.settings.target.on('loadedmetadata', function() {
+				_this.duration = _this.audio.duration;
+				if (_this.duration != "Infinity") {
+					_this.durationContent.html(Math.floor(_this.duration) + 's');
+				} else {
+					var attr = $(_this.settings.target).attr('duration');
+					if(attr){
+						_this.durationContent.html($(_this.settings.target).attr('duration')+"s");
+					}else{
+						_this.durationContent.html('');
+					}
+				}
 			});
 			this.bindEvent();
 		}
@@ -59,22 +73,25 @@
 			this.controller.on('click', function() {
 				_this.play();
 			});
-			$(this.audio).on('ended',()=>_this.stop());
-			$(this.audio).on('timeupdate',()=>this.settings.updateCallback && this.settings.updateCallback.call(this,this.audio,this.audio.duration,this.durationContent))
+			$(this.audio).on('ended', () => _this.stop());
+			$(this.audio).on('timeupdate', () => this.settings.updateCallback && this.settings.updateCallback.call(this, this.audio, this.audio.duration, this.durationContent))
+			$(this.audio).on('error',()=>{
+				alert('加载音频文件出现错误!')
+			});
 		}
 		play() {
 			if (this.audio.paused) {
 				this.audio.play();
 				this.controller.addClass('play');
-			}else{
+			} else {
 				this.audio.pause();
 				this.controller.removeClass('play');
 			}
-			this.settings.playCallback && this.settings.playCallback.call(this,this.audio,this.audio.paused,this.durationContent);
+			this.settings.playCallback && this.settings.playCallback.call(this, this.audio, this.audio.paused, this.durationContent);
 		}
-		stop(){
+		stop() {
 			this.controller.removeClass('play');
-			this.settings.stopCallback && this.settings.stopCallback.call(this,this.audio,this.audio.paused,this.durationContent);
+			this.settings.stopCallback && this.settings.stopCallback.call(this, this.audio, this.audio.paused, this.durationContent);
 		}
 	}
 	return Audio
